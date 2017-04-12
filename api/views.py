@@ -30,32 +30,6 @@ def restaurant_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes((permissions.AllowAny,))
-def restaurant_detail(request, pk):
-    """
-    Retrieve, update or delete a Restaurant instance.
-    """
-    try:
-        restaurants = Restaurants.objects.get(pk=pk)
-    except Restaurants.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = RestaurantSerializer(restaurants)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = RestaurantSerializer(restaurants, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        restaurant.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 @api_view(['GET'])
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
@@ -69,7 +43,4 @@ def test(request):
          "avgGrade": { "$avg" : "$grades.score" }} },
           {"$sort": {"avgGrade": -1}}, { "$limit": 10}, ]
         top = Restaurants._get_collection().aggregate(pipeline=pipe)
-        # cuisine_data = sorted(cuisine_data.items(),key=itemgetter(1),reverse=True)
-        # return
-        # Response({'cuisine':cuisine_data,'top':top['result']},template_name='templates/api/index.html')
         return Response({'cuisine': json.dumps(cuisine_data),'top':top['result']}, template_name='templates/api/index.html')

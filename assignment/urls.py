@@ -17,10 +17,8 @@ router = routers.DefaultRouter()
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # url(r'^some/', home, name='index'),
      url(r'^restaurant/$', restaurant_list),
-     url(r'^restaurant_details/$', restaurant_detail),
      url(r'^test/$', test),
     # url(r'^some/', RestaurantList.as_view(), name='Restaurant-list'),
 

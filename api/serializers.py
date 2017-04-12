@@ -11,13 +11,6 @@ class RestaurantSerializer(DocumentSerializer):
         fields = '__all__'
 
 
-        
-# class RestaurantSerializer(serializers.ModelSerializer):
-#     class Meta:
-#     	model = Restaurants 
-#     	fields = ('address','borough','cuisine','grades','name','restaurant_id')
-
-
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
