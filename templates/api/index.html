@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	{% load static %}
+	{% load dictkeylookup %}
+	<style type="text/css" media="screen">
+		h4{
+			font-size: 14px;
+			margin: 0;
+			padding: 1px;
+		}
+		p{
+			font-size: 12px;
+			margin: 0;
+			padding: 1px;
+		}
+		.arc text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+.arc2 text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc2 path {
+  stroke: #fff;
+}
+	</style>
+	<script src="{% static 'jquery-2.2.3.js'%}" type="text/javascript"></script>
+	<script src="{% static 'd3.js'%}" type="text/javascript"></script>
+	<script src="{% static 'd3.pie.js'%}" type="text/javascript"></script>
+	<script>
+		$(document).ready(function() {
+			var c = {{ cuisine|safe }}
+			var content = []
+	  for (var key in c){
+	  	content.push({"label":key,"value":c[key]})
+	}
+			// var pie = new d3pie("pieChart", {"data":{"content":content}});	
+				  var pie = new d3pie("pieChart", {
+
+    "header": {
+
+      "title": {
+
+        "text": "Various Cuisines as Percentage",
+
+        "fontSize": 22,
+
+        "font": "verdana"
+
+      },
+
+    },
+
+    "size": {
+
+      "canvasHeight": 900,
+
+      "canvasWidth": 900
+
+    },
+
+    "data": {
+
+      "content": content
+
+    },
+
+    "labels": {
+
+      "outer": {
+
+        "pieDistance": 50
+
+      }
+
+    }
+
+  });
+
+});
+	</script>
+</head>
+<body>
+	<!-- {{ cuisine }} -->
+	<!-- {{ top }} -->
+	{% for x in top %}
+	<h4>
+		Name - 	{{ x | dictkeylookup:"_id" | dictkeylookup:"name" }} 
+	</h4>
+	<p>Cuisine - {{ x | dictkeylookup:"_id" | dictkeylookup:"cuisine"}}</p>
+	<p>Borough - {{ x | dictkeylookup:"_id" | dictkeylookup:"borough"}} </p>
+	{% endfor%}
+	<div id="pieChart"></div>
+</body>
+</html>
