@@ -25,7 +25,7 @@ SECRET_KEY = 'spo%b)g!s=33bt#!6hpg&!&1n25+5+lxz1e4ed6q61au6!cn6m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -148,9 +148,7 @@ AUTHENTICATION_BACKENDS = (
 MONGODB_DATABASES = {
     "default": {
         "name": 'test',
-        "host": '127.0.0.1',
-        "password": '',
-        "username": '',
+        "host": os.getenv('DB', '127.0.0.1'),
         "tz_aware": True, # if you using timezones in django (USE_TZ = True)
     },
 }
@@ -159,10 +157,10 @@ INSTALLED_APPS += ["django_mongoengine"]
 
 _MONGODB_USER = 'admin'
 _MONGODB_PASSWD = 'password'
-_MONGODB_HOST = '127.0.0.1:27017'
+_MONGODB_HOST = os.getenv('DB', '127.0.0.1')
 _MONGODB_NAME = 'admin'
 _MONGODB_DATABASE_HOST = \
-    'mongodb://%s:%s@%s/%s' \
-    % (_MONGODB_USER, _MONGODB_PASSWD, _MONGODB_HOST, _MONGODB_NAME)
+    'mongodb://%s/%s' \
+    % (_MONGODB_HOST, _MONGODB_NAME)
 
 mongoengine.connect(_MONGODB_NAME, host=_MONGODB_DATABASE_HOST)
