@@ -1,0 +1,6 @@
+django==1.11
+pymongo==2.8.1
+mongoengine==0.9
+djangorestframework
+django-rest-framework-mongoengine
+git+https://github.com/MongoEngine/django-mongoengine
